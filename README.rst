@@ -1,7 +1,7 @@
 Warning
 ===========
 This is very early EXPERIMENTAL attempt to write mongoengine backend for flask-admin (see `/contrib/mongoenginemodel`). It probably contains a lot of bugs/not implemented stuff.
-Please procced to https://github.com/mrjoes/flask-admin if you're looking for production version of flask-admin (w/o mongoengine).
+Please proceed to https://github.com/mrjoes/flask-admin if you're looking for production version of flask-admin (w/o mongoengine).
 
 Flask-Admin
 ===========

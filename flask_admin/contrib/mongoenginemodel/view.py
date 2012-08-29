@@ -88,7 +88,7 @@ class ModelView(BaseModelView):
 
         super(ModelView, self).__init__(model, name, category, endpoint, url)
         # FIXME: primary keys
-        self._primary_key = self.model._id
+        self._primary_key = self.model.id
 
     # ok
     def _get_model_fields(self, model=None):
@@ -100,8 +100,9 @@ class ModelView(BaseModelView):
 
     # FIXME: primary keys
     def get_pk_value(self, model): 
-        print "============ get_pk_value: ", model._id       
-        return model._id
+        print model.id
+        print "============ get_pk_value: ", model.id       
+        return model.id
 
     def scaffold_list_columns(self):
         """returns list of columns names"""
@@ -304,7 +305,7 @@ class ModelView(BaseModelView):
         return count, result
 
     def get_one(self, id):
-        return self.model.objects(_id=id).first()
+        return self.model.objects(id=id).first()
 
     def create_model(self, form):
         try:
@@ -324,7 +325,11 @@ class ModelView(BaseModelView):
         print "---update_model called"
         try:
             form.populate_obj(model)
-            model.save()
+            print form.data
+            # append set__ to all keys
+            set_data = dict(map(lambda (key, value): ("set__"+str(key), value), form.data.items()))
+            print set_data
+            model.save(validate=False)
 
             # For peewee have to save inline forms after model was saved
             save_inline(form, model)
@@ -336,7 +341,7 @@ class ModelView(BaseModelView):
 
     def delete_model(self, model):
         try:
-            print "--- view.py:delete_model // FIXME: 'safe' flag is always true //", model._id
+            print "--- view.py:delete_model // FIXME: 'safe' flag is always true //", model.id
             model.delete(safe=True)
             return True
         except Exception, ex:
@@ -356,7 +361,7 @@ class ModelView(BaseModelView):
             lazy_gettext('Are you sure you want to delete selected models?'))
     def action_delete(self, ids):
         try:
-            documents = self.model.objects(_id__in=ids)
+            documents = self.model.objects(id__in=ids)
             count = documents.count()
             documents.delete()
             

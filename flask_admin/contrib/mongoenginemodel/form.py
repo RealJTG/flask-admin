@@ -31,7 +31,7 @@ class InlineModelFormList(fields.FieldList):
         self.prop = prop
         self._pk =  model.id #get_primary_key(model)
         print "InlineModelFormList - primary key = ", self._pk
-        print dir(model._id)
+        print dir(model.id)
         super(InlineModelFormList, self).__init__(InlineModelFormField(form, self._pk), **kwargs)
 
     def __call__(self, **kwargs):
@@ -39,8 +39,8 @@ class InlineModelFormList(fields.FieldList):
         return self.widget(self, template=self.form(), **kwargs)
 
     def get_pk(self): 
-        print "get_pk called: ", self.model._id
-        return self.model._id      
+        print "get_pk called: ", self.model.id
+        return self.model.id      
 
     def process(self, formdata, data=None):
         if not formdata:
@@ -57,7 +57,7 @@ class InlineModelFormList(fields.FieldList):
     def save_related(self, obj):
         print "--- save_related called"
 
-        model_id = obj._id #getattr(obj, self._pk)
+        model_id = obj.id #getattr(obj, self._pk)
 
         values = self.model.select().where(user=model_id).execute()
 

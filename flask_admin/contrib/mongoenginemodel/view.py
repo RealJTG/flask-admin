@@ -88,7 +88,7 @@ class ModelView(BaseModelView):
 
         super(ModelView, self).__init__(model, name, category, endpoint, url)
         # FIXME: primary keys
-        self._primary_key = self.model.id
+        self._primary_key = self.model._id
 
     # ok
     def _get_model_fields(self, model=None):
@@ -100,8 +100,8 @@ class ModelView(BaseModelView):
 
     # FIXME: primary keys
     def get_pk_value(self, model): 
-        print "============ get_pk_value: ", model.id       
-        return model.id
+        print "============ get_pk_value: ", model._id       
+        return model._id
 
     def scaffold_list_columns(self):
         """returns list of columns names"""
@@ -304,7 +304,7 @@ class ModelView(BaseModelView):
         return count, result
 
     def get_one(self, id):
-        return self.model.objects(id=id).first()
+        return self.model.objects(_id=id).first()
 
     def create_model(self, form):
         try:
@@ -336,7 +336,7 @@ class ModelView(BaseModelView):
 
     def delete_model(self, model):
         try:
-            print "--- view.py:delete_model // FIXME: 'safe' flag is always true //", model.id
+            print "--- view.py:delete_model // FIXME: 'safe' flag is always true //", model._id
             model.delete(safe=True)
             return True
         except Exception, ex:
@@ -356,7 +356,7 @@ class ModelView(BaseModelView):
             lazy_gettext('Are you sure you want to delete selected models?'))
     def action_delete(self, ids):
         try:
-            documents = self.model.objects(id__in=ids)
+            documents = self.model.objects(_id__in=ids)
             count = documents.count()
             documents.delete()
             

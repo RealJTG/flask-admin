@@ -143,8 +143,7 @@ class ModelView(BaseModelView):
                 field_type = type(p)
 
                 # Check type
-                if (field_type != CharField and
-                    field_type != TextField):
+                if (field_type != StringField):
                         raise Exception('Can only search on text columns. ' +
                                         'Failed to setup search for "%s"' % p)
 
@@ -238,9 +237,9 @@ class ModelView(BaseModelView):
         # joins = set()
 
         # # Search
-        # if self._search_supported and search:
+        if self._search_supported and search:
         #     terms = search.split(' ')
-
+            flash('Not implemented: search', 'error')
         #     for term in terms:
         #         if not term:
         #             continue

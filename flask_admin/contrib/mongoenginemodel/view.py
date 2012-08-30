@@ -5,7 +5,8 @@ from flask.ext.admin.babel import gettext, ngettext, lazy_gettext
 from flask.ext.admin.model import BaseModelView
 
 #from peewee import PrimaryKeyField, ForeignKeyField, Field, CharField, TextField
-# replaced! from wtfpeewee.orm import model_form               
+# replaced! from wtfpeewee.orm import model_form 
+from mongoengine.fields import StringField
 
 from flask.ext.admin.actions import action
 from flask.ext.admin.contrib.mongoenginemodel import filters

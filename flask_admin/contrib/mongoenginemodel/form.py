@@ -16,6 +16,8 @@ from flask.ext.admin.model.widgets import InlineFormListWidget
 
 from wtforms import fields as f, validators
 
+from flask.ext.mongoengine.wtf.fields import ModelSelectMultipleField
+
 
 
 
@@ -91,6 +93,20 @@ def converts(*args):
     return _inner
 
 class CustomModelConverter(ModelConverter):
+
+    @converts('ListField')
+    def conv_List(self, model, field, kwargs):
+        if isinstance(field.field, ReferenceField):            
+            return ModelSelectMultipleField(model=field.field.document_type, widget=form.ChosenSelectWidget(multiple=True), **kwargs)
+        if field.field.choices:
+            kwargs['multiple'] = True
+            return self.convert(model, field.field, kwargs)
+        unbound_field = self.convert(model, field.field, {})
+        kwargs = {
+            'validators': [],
+            'filters': [],
+        }
+        return f.FieldList(unbound_field, min_entries=0, **kwargs)
 
     @converts('DateTimeField')
     def conv_DateTime(self, model, field, kwargs):

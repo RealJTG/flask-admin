@@ -6,7 +6,6 @@ from flask.ext.admin.model import BaseModelView
 
 #from peewee import PrimaryKeyField, ForeignKeyField, Field, CharField, TextField
 from mongoengine.fields import StringField
-# replaced! from wtfpeewee.orm import model_form               
 
 from flask.ext.admin.actions import action
 from flask.ext.admin.contrib.mongoenginemodel import filters
@@ -241,7 +240,6 @@ class ModelView(BaseModelView):
         if self._search_supported and search:
             flash('Not implemented: search in /mongoenginemodel/filters.py: get_list()', 'error')
         #     terms = search.split(' ')
-
         #     for term in terms:
         #         if not term:
         #             continue

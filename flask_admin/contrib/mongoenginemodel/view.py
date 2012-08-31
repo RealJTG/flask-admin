@@ -5,6 +5,7 @@ from flask.ext.admin.babel import gettext, ngettext, lazy_gettext
 from flask.ext.admin.model import BaseModelView
 
 #from peewee import PrimaryKeyField, ForeignKeyField, Field, CharField, TextField
+from mongoengine.fields import StringField
 # replaced! from wtfpeewee.orm import model_form               
 
 from flask.ext.admin.actions import action
@@ -143,8 +144,7 @@ class ModelView(BaseModelView):
                 field_type = type(p)
 
                 # Check type
-                if (field_type != CharField and
-                    field_type != TextField):
+                if (field_type != StringField):
                         raise Exception('Can only search on text columns. ' +
                                         'Failed to setup search for "%s"' % p)
 
@@ -238,7 +238,8 @@ class ModelView(BaseModelView):
         # joins = set()
 
         # # Search
-        # if self._search_supported and search:
+        if self._search_supported and search:
+            flash('Not implemented: search in /mongoenginemodel/filters.py: get_list()', 'error')
         #     terms = search.split(' ')
 
         #     for term in terms:
